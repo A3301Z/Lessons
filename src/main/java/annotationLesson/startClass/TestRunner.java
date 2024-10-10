@@ -1,11 +1,11 @@
-package org.example;
+package annotationLesson.startClass;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.annotation.annotations.AfterSuite;
-import org.example.annotation.annotations.BeforeSuite;
-import org.example.annotation.annotations.Test;
-import org.example.annotation.test.TestClass;
-import org.example.annotation.processors.ValidationProcessor;
+import annotationLesson.annotations.AfterSuite;
+import annotationLesson.annotations.BeforeSuite;
+import annotationLesson.annotations.Test;
+import annotationLesson.testClass.TestClass;
+import annotationLesson.processor.ValidationProcessor;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

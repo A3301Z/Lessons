@@ -1,11 +1,10 @@
-package org.example.annotation.test;
+package annotationLesson.testClass;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.example.annotation.annotations.AfterSuite;
-import org.example.annotation.annotations.BeforeSuite;
-import org.example.annotation.annotations.Test;
+import annotationLesson.annotations.AfterSuite;
+import annotationLesson.annotations.BeforeSuite;
+import annotationLesson.annotations.Test;
 
 
 /***

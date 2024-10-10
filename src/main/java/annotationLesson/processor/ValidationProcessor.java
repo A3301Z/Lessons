@@ -1,12 +1,12 @@
-package org.example.annotation.processors;
+package annotationLesson.processor;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.example.annotation.annotations.AfterSuite;
-import org.example.annotation.annotations.BeforeSuite;
-import org.example.annotation.annotations.Test;
+import annotationLesson.annotations.AfterSuite;
+import annotationLesson.annotations.BeforeSuite;
+import annotationLesson.annotations.Test;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -34,13 +34,14 @@ public class ValidationProcessor {
      */
     private static void isTheMethodStatic(Class<?> clazz) {
         for (Method method : clazz.getDeclaredMethods()) {
-            if (
-                    method.isAnnotationPresent(BeforeSuite.class) &&
-                            !java.lang.reflect.Modifier.isStatic(method.getModifiers()) ||
-                            method.isAnnotationPresent(AfterSuite.class) &&
-                                    !java.lang.reflect.Modifier.isStatic(method.getModifiers())
+            if (method.isAnnotationPresent(BeforeSuite.class) &&
+                    !java.lang.reflect.Modifier.isStatic(method.getModifiers()) ||
+                    method.isAnnotationPresent(AfterSuite.class) &&
+                            !java.lang.reflect.Modifier.isStatic(method.getModifiers())
             ) {
-                notStaticMethodExceptionsList.add(new IllegalArgumentException("Method #" + method.getName() + " is not static"));
+                notStaticMethodExceptionsList.add(
+                        new IllegalArgumentException("Метод #" + method.getName() + " не статический")
+                );
             }
         }
     }
@@ -55,8 +56,9 @@ public class ValidationProcessor {
                 int value = test.priority();
                 if (value < 1 || value > 10) {
                     notStaticMethodExceptionsList.add(
-                            new IllegalArgumentException(
-                                    "Method #" + method.getName() + "priority range should be between 1 and 10. Value = " + value
+                            new IllegalArgumentException(String.format("""
+                                    "Метод #%s должен иметь диапазон параметра
+                                     priority в пределах от 1 до 10. Priority = %d""", method.getName(), value)
                             )
                     );
                 }
@@ -82,13 +84,13 @@ public class ValidationProcessor {
 
         if (beforeSuiteCount.size() > 1) {
             notStaticMethodExceptionsList.add(new IllegalArgumentException(
-                    "Method #" + beforeSuiteCount.getFirst().getName() + "can only be called once"
+                    "Метод #" + beforeSuiteCount.getFirst().getName() + "может быть вызван только один раз"
             ));
         }
 
         if (afterSuiteCount.size() > 1) {
             notStaticMethodExceptionsList.add(new IllegalArgumentException(
-                    "Method #" + afterSuiteCount.getFirst().getName() + " can only be called once"
+                    "Метод #" + afterSuiteCount.getFirst().getName() + " может быть вызван только один раз"
             ));
         }
     }
